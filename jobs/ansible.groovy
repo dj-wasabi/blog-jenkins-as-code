@@ -5,6 +5,14 @@ import groovy.transform.Field
 @Field String basePath = 'ansible'
 @Field String defaultPollingScm = 'H/5 * * * *'
 
+JobConstructor[] jobDefnList = [
+        [
+                "ansible-telegraf",
+                "git@github.com:dj-wasabi/ansible-telegraf.git",
+                defaultPollingScm
+        ]
+]
+
 class JobConstructor {
     def jobName = ""
     def jobGitUrl = ""
@@ -17,26 +25,16 @@ class JobConstructor {
     }
 }
 
-JobConstructor[] jobDefnList = [
-        [
-                "ansible-telegraf",
-                "git@github.com:dj-wasabi/ansible-telegraf.git",
-                defaultPollingScm
-        ]
-]
-
 folder(basePath) {
-    description basePath + " jobs"
+    description "Overview of all " + basePath + " related jobs."
 }
 
 jobDefnList.each { job ->
     println "[INFO] Generating view... " + basePath
     println "[INFO] Generating job... " + job.jobName
 
-    Random random = new Random()
     def index = 0
     def jobName = job.jobName
-    def jobNameID = random.nextInt(10 ** 10)
     def jobGitUrl = job.jobGitUrl
     def jobPollingScm = job.jobPollingScm
 
@@ -70,14 +68,5 @@ listView(basePath) {
         lastFailure()
         lastDuration()
         buildButton()
-    }
-}
-
-buildMonitorView(basePath + "-dashboard") {
-    recurse(true)
-    jobs {
-        jobDefnList.each { job ->
-            name(basePath + "/" + job.jobName)
-        }
     }
 }
