@@ -1,14 +1,13 @@
-import org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval
 import groovy.transform.Field
 
 @Field String jenkinsCredentialId = "SSH_GIT_KEY"
-@Field String basePath = 'ansible'
+@Field String basePath = 'test'
 @Field String defaultPollingScm = 'H/5 * * * *'
 
 JobConstructor[] jobDefnList = [
         [
-                "ansible-telegraf",
-                "git@github.com:dj-wasabi/ansible-telegraf.git",
+                "test-repo",
+                "https://bitbucket.org/wernerdijkerman/this-is-some-test.git",
                 defaultPollingScm
         ]
 ]
