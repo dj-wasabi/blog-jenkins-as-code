@@ -1,6 +1,6 @@
 import groovy.transform.Field
 
-@Field String jenkinsCredentialId = "basic-SSH"
+@Field String jenkinsCredentialId = "SSH_GIT_KEY"
 @Field String basePath = 'ansible'
 @Field String defaultPollingScm = 'H/5 * * * *'
 
