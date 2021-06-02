@@ -33,9 +33,10 @@ jobDefnList.each { job ->
     println "[INFO] Generating view... " + basePath
     println "[INFO] Generating job... " + job.jobName
 
+    Random random = new Random()
     def index = 0
     def jobName = job.jobName
-    def jobNameID = jobName.md5()
+    def jobNameID = random.nextInt(10 ** num)
     def jobGitUrl = job.jobGitUrl
     def jobPollingScm = job.jobPollingScm
 
