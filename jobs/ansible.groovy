@@ -39,6 +39,7 @@ jobDefnList.each { job ->
         displayName(job.jobName)
         branchSources {
             git {
+                id(job.jobName.md5())
                 remote(job.jobGitUrl)
                 credentialsId(jenkinsCredentialId)
             }
@@ -74,10 +75,4 @@ buildMonitorView(basePath + "-dashboard") {
             name(basePath + "/" + job.jobName)
         }
     }
-}
-
-// Approve this script.
-ScriptApproval scriptApproval = ScriptApproval.get()
-scriptApproval.pendingScripts.each {
-    scriptApproval.approveScript(it.hash)
 }
