@@ -5,12 +5,6 @@ import groovy.transform.Field
 @Field String basePath = 'ansible'
 @Field String defaultPollingScm = 'H/5 * * * *'
 
-// Approve this script.
-ScriptApproval scriptApproval = ScriptApproval.get()
-scriptApproval.pendingScripts.each {
-    scriptApproval.approveScript(it.hash)
-}
-
 class JobConstructor {
     def jobName = ""
     def jobGitUrl = ""
@@ -80,4 +74,10 @@ buildMonitorView(basePath + "-dashboard") {
             name(basePath + "/" + job.jobName)
         }
     }
+}
+
+// Approve this script.
+ScriptApproval scriptApproval = ScriptApproval.get()
+scriptApproval.pendingScripts.each {
+    scriptApproval.approveScript(it.hash)
 }
