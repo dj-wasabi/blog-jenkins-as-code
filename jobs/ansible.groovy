@@ -44,7 +44,7 @@ jobDefnList.each { job ->
         displayName(jobName)
         branchSources {
             git {
-                id(jobNameID)
+                id(jobName)
                 remote(jobGitUrl)
                 credentialsId(jenkinsCredentialId)
             }
