@@ -36,7 +36,7 @@ jobDefnList.each { job ->
     Random random = new Random()
     def index = 0
     def jobName = job.jobName
-    def jobNameID = random.nextInt(10 ** num)
+    def jobNameID = random.nextInt(10 ** 10)
     def jobGitUrl = job.jobGitUrl
     def jobPollingScm = job.jobPollingScm
 
