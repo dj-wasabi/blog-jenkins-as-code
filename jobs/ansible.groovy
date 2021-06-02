@@ -34,18 +34,22 @@ jobDefnList.each { job ->
     println "[INFO] Generating job... " + job.jobName
 
     def index = 0
+    def jobName = job.jobName
+    def jobNameID = jobName.md5()
+    def jobGitUrl = job.jobGitUrl
+    def jobPollingScm = job.jobPollingScm
 
-    multibranchPipelineJob(basePath + "/" + job.jobName) {
-        displayName(job.jobName)
+    multibranchPipelineJob(basePath + "/" + jobName) {
+        displayName(jobName)
         branchSources {
             git {
-                id(job.jobName.md5())
-                remote(job.jobGitUrl)
+                id(jobNameID)
+                remote(jobGitUrl)
                 credentialsId(jenkinsCredentialId)
             }
         }
         triggers {
-            cron(job.jobPollingScm)
+            cron(jobPollingScm)
         }
     }
 }
