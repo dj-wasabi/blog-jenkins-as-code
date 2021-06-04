@@ -1,12 +1,12 @@
 import groovy.transform.Field
 
 @Field String jenkinsCredentialId = "SSH_GIT_KEY"
-@Field String basePath = 'test'
+@Field String basePath = 'example'
 @Field String defaultPollingScm = 'H/5 * * * *'
 
-JobConstructor[] jobDefnList = [
+JobConstructor[] jobList = [
         [
-                "test-repo",
+                "example-repo",
                 "https://bitbucket.org/wernerdijkerman/this-is-some-test.git",
                 defaultPollingScm
         ]
@@ -28,7 +28,7 @@ folder(basePath) {
     description "Overview of all " + basePath + " related jobs."
 }
 
-jobDefnList.each { job ->
+jobList.each { job ->
     println "[INFO] Generating view... " + basePath
     println "[INFO] Generating job... " + job.jobName
 
@@ -55,7 +55,7 @@ jobDefnList.each { job ->
 listView(basePath) {
     recurse(true)
     jobs {
-        jobDefnList.each { job ->
+        jobList.each { job ->
             name(basePath + "/" + job.jobName)
         }
     }
