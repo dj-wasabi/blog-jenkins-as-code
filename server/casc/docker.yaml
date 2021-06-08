@@ -1,0 +1,21 @@
+jenkins:
+  clouds:
+    - docker:
+        name: "docker"
+        dockerApi:
+          dockerHost:
+            uri: "${DOCKER_HOST:-unix:///var/run/docker.sock}"
+        templates:
+        - connector:
+            attach:
+              user: "jenkins"
+          dockerTemplateBase:
+            bindAllPorts: true
+            image: "jenkins/agent:latest"
+            privileged: true
+            environment:
+              - "TZ=Europe/Amsterdam"
+          instanceCapStr: "99"
+          labelString: "worker"
+          name: "worker"
+          remoteFs: "/home/jenkins/agent"

@@ -1,0 +1,4 @@
+@Library('djwasabi') _
+def run = new com.djwasabi.common.examplePipeline()
+def NAME = "Wasabi"
+run.pipeline('test-repo', NAME)

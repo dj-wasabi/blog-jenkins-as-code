@@ -1,0 +1,48 @@
+---
+version: '3.8'
+
+services:
+  docker:
+    image: alpine/socat
+    container_name: socat
+    ports:
+      - "2375:2375"
+    networks:
+      jenkins:
+        aliases:
+          - docker
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: "tcp-listen:2375,fork,reuseaddr unix-connect:/var/run/docker.sock"
+    privileged: true
+
+  jenkins:
+    image: jenkins-as-code
+    container_name: jenkins
+    restart: unless-stopped
+    depends_on:
+      - docker
+    networks:
+      - jenkins
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "1"
+    ports:
+      - 8080:8080
+      - 50000:50000
+    environment:
+      DOCKER_HOST: "tcp://docker:2375"
+      DOCKER_TLS_VERIFY: ""
+      JENKINS_ADMIN_PASSWORD: adminn
+      JENKINS_SSH_GIT_KEY: ${EXPORTED_PASSWORD}
+      JENKINS_JOB_DSL_URL: "git@github.com:dj-wasabi/jenkins-as-code.git"
+      JENKINS_LIB_DSL_URL: "https://bitbucket.org/wernerdijkerman/jenkins-shared-library.git"
+    volumes:
+      - ./casc:/var/jenkins_home/casc
+
+networks:
+  jenkins:

@@ -1,0 +1,27 @@
+jobs:
+  - script: >
+      job('Seed All DSL jobs') {
+        description('Seed job for all DSL jobs')
+        scm {
+            git {
+                remote { 
+                    url "${JENKINS_JOB_DSL_URL}"
+                    credentials 'SSH_GIT_KEY' 
+                }
+                branch '*/main'
+                extensions {
+                  cleanAfterCheckout()
+                  wipeOutWorkspace()
+                }
+              }
+        }
+        triggers {
+            scm('H/15 * * * *')
+        }
+        steps {
+          dsl {
+            external('${JENKINS_JOB_DSL_PATH:-jobs}/*.groovy')
+            removeAction('DELETE')
+          }
+        }
+      }
