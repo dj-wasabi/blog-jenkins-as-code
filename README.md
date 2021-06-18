@@ -2,6 +2,10 @@
 
 This repository contains example code that is discussed on my personal homepage.
 
+The blogs can be found here:
+
+* Part 1: https://werner-dijkerman.nl/2021/06/14/jenkins-as-code-part-1-setting-up-jenkins-in-docker/
+* Part 2: https://werner-dijkerman.nl/2021/06/17/jenkins-as-code-part-2-setting-up-the-jenkins-job/
 
 ## Docker compose
 
